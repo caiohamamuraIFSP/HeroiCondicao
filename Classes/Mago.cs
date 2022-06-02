@@ -1,3 +1,5 @@
+using System;
+
 public class Mago : Personagem
 {
     static Random rnd = new Random();
@@ -12,7 +14,7 @@ public class Mago : Personagem
 
     private Mago() { }
 
-    public override int Ataca(char variante)
+    public override int Ataca(char variante, ref Personagem personagem)
     {
         if (variante == '1')
         {
@@ -49,7 +51,7 @@ public class Mago : Personagem
             }
             else
             {
-                System.Console.WriteLine("i need more mana");
+                System.Console.WriteLine("I need more mana");
                 return 0;
             }
         }

@@ -1,3 +1,5 @@
+using System;
+
 public class Arco : Arma{
     public Arco(){
         this.forca = DefineForca();

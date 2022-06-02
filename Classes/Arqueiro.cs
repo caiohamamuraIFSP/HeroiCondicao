@@ -1,3 +1,5 @@
+using System;
+
 public class Arqueiro : Personagem
 {
     static Random rnd = new Random();
@@ -11,7 +13,7 @@ public class Arqueiro : Personagem
     }
 
     private Arqueiro() { }
-    public override int Ataca(char variante)
+    public override int Ataca(char variante, ref Personagem personagem)
     {
         if (variante == '1')
         {
@@ -33,6 +35,7 @@ public class Arqueiro : Personagem
             if (this.stamina >= 5)
             {
                 System.Console.WriteLine("Flecha especial");
+                personagem = AdicionaCondicao(personagem);
                 var dano = rnd.Next(0, 8) + this.arma.forca;
                 var critico = rnd.Next(0, 100);
                 this.stamina = this.stamina - 5;
@@ -57,6 +60,19 @@ public class Arqueiro : Personagem
             return 0;
         }
     }
+
+    public Personagem AdicionaCondicao(Personagem personagem)
+    {
+        var rand = new Random();
+        int aleatorio = rand.Next(0,4);
+        if (aleatorio == 0)
+            return Envenenado.Envenenar(personagem);
+        else if (aleatorio == 1)
+            return Envenenado.Envenenar(personagem);
+        else   
+            return personagem;
+    }
+    
     public override int UsaItem(Item item)
     {
         return this.vida = this.vida + item.modificador;

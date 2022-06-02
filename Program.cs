@@ -6,9 +6,9 @@ class Program
     static void Main(string[] args)
     {
         while(run){
-        Personagem arqueiro = Arqueiro.Cria();
-        Personagem mago = Mago.Cria();
-        Batalha batalha1 = new Batalha(mago, arqueiro);
+            Personagem arqueiro = Arqueiro.Cria();
+            Personagem mago = Mago.Cria();
+            Batalha batalha1 = new Batalha(mago, arqueiro);
         }
     }
 }

@@ -1,3 +1,5 @@
+using System;
+
 public class Cajado : Arma{
     public Cajado(){
         this.forca = DefineForca();

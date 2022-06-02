@@ -1,57 +1,50 @@
+using System;
+
 public class Batalha
 {
     public int turno = 1;
+
     public Batalha(Personagem personagem1, Personagem personagem2)
     {
+        Acao acao = new Acao();
         //Refatorar Tudo, mudar o metodo ataca para void?
-        while (personagem1.vida > 0 && personagem2.vida > 0)
+        while (personagem1.getVida() > 0 && personagem2.getVida() > 0)
         {
-            System.Console.WriteLine("Vida P1: " + personagem1.vida + " | Vida P2: " + personagem2.vida);
-            bool naoAgiu = true;
-            while (naoAgiu)
+            System.Console.WriteLine("Vida P1: " + personagem1.getVida() + " | Vida P2: " + personagem2.getVida());
+            if (this.turno == 1)
             {
-                if (this.turno == 1)
-                {
-
-                    char acao = Console.ReadLine()[0];
-                    if (acao == '3')
-                    {
-                        personagem1.UsaItem(personagem1.item);
-                    }
-                    int dano = personagem1.Ataca(acao);
-                    if (dano == 0)
-                    {
-                        System.Console.WriteLine("escolha uma ação válida! : '1' , '2' ou '3'");
-                    }
-                    else
-                    {
-                        personagem2.vida = personagem2.vida - dano;
-                        System.Console.WriteLine("Dano: " + dano);
-                        naoAgiu = false;
-                    }
-                }
-                else
-                {
-                    Random rnd = new Random();
-                    int acaoBruto = rnd.Next(0, 3);
-                    char acao = Convert.ToChar(acaoBruto + 49);
-                    if (acao == '3')
-                    {
-                        personagem2.UsaItem(personagem2.item);
-                    }
-                    else
-                    {
-                        int dano = personagem2.Ataca(acao);
-                        personagem1.vida = personagem1.vida - dano;
-                        System.Console.WriteLine("Dano: " + dano);
-                        naoAgiu = false;
-                    }
-                }
+                char acaoEscolhida = RecebeAcao();
+                acao.RealizaAcao(acaoEscolhida, personagem1, ref personagem2);
+                personagem1 = personagem1.AtualizaCondicao();
+            }
+            else
+            {
+                Random rnd = new Random();
+                int acaoBruto = rnd.Next(1, 4);
+                char acaoEscolhida = acaoBruto.ToString()[0];
+                acao.RealizaAcao(acaoEscolhida, personagem2, ref personagem1);
+                personagem2 = personagem2.AtualizaCondicao();
             }
             Console.ResetColor();
             trocaTurno();
         }
+        
     }
+
+    private char RecebeAcao()
+    {
+        while (true)
+        {
+            ConsoleKeyInfo escolha = Console.ReadKey(true);
+            if (escolha.Key == ConsoleKey.D1)
+                return '1';
+            if (escolha.Key == ConsoleKey.D2)
+                return '2';
+            if (escolha.Key == ConsoleKey.D3)
+                return '3';
+        }
+    }
+
     public int trocaTurno()
     {
         int turno = (this.turno * (-1));
